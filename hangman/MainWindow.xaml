@@ -11,7 +11,8 @@
         <TextBlock x:Name="InfoTextBlock" HorizontalAlignment="Left" Margin="120,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Enter a letter"/><LineBreak/><Run/></TextBlock>
         <Button x:Name="checkButton" Content="Check!" HorizontalAlignment="Left" Margin="124,148,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
         <TextBlock x:Name="wordTextBlock" HorizontalAlignment="Left" Margin="380,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBlock x:Name="showWordTextBlock" HorizontalAlignment="Left" Margin="370,112,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="showWordTextBlock" HorizontalAlignment="Left" Margin="370,112,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <Canvas x:Name="hangmanCanvas"  HorizontalAlignment="Left" Height="139" Margin="104,173,0,0" VerticalAlignment="Top" Width="126"/>
 
     </Grid>
 </Window>

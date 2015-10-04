@@ -2,3 +2,9 @@
 word
 wound
 pepper
+done
+name
+treat
+really
+make
+man

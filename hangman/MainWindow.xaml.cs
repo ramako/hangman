@@ -35,14 +35,13 @@ namespace hangman
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            /*  int temp = 0;
-              showWordTextBlock.Text = wordForHangman;
-              wordTextBlock.Text= wordForHangman.IndexOf(guessTextBox.Text).ToString();
-              temp= wordForHangman.IndexOf(guessTextBox.Text);*/
-            if (guessTextBox.Text == "")
+            string wordFromGuessTextBox=guessTextBox.Text;
+            guessTextBox.Text = "";
+
+            if (wordFromGuessTextBox == "")
                 return;
             for (int i=0; i< wordForHangman.Length; i++)
-                if (wordForHangman[i] == guessTextBox.Text[0])
+                if (wordForHangman[i] == wordFromGuessTextBox[0])
                 {
                     wordTextBlock.Text = "esta";
                     //quitar caracter de wordForHangman que sea igual a c
@@ -52,6 +51,8 @@ namespace hangman
                 else
                 { 
                     wordTextBlock.Text = "no esta";
+                    if(i+1==wordForHangman.Length)
+                        hangmanCanvas.Children.Add(new hangmanLine().drawHangmanLine());
                 }
 
 
@@ -65,7 +66,9 @@ namespace hangman
         {
             wordForHangman=wordForHangman.Remove(indexCharacter,1);
             if (wordForHangman.Length == 0)
-                showWordTextBlock.Text = "You've won";
+            {
+                 MessageBox.Show("You have won!!","Result", MessageBoxButton.OK,MessageBoxImage.Question);
+            }
             else
                 showWordTextBlock.Text = wordForHangman;
         }
