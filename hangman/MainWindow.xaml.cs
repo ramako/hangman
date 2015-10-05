@@ -29,33 +29,42 @@ namespace hangman
             Random rand = new Random();
             lines = System.IO.File.ReadAllLines(path);
             wordForHangman=lines[rand.Next(lines.Length)];
-            showWordTextBlock.Text = wordForHangman;
+            //showWordTextBlock.Text = wordForHangman;
+            for (int i = 0; i <= wordForHangman.Length; i++)
+                showWordTextBlock.Text+= " _";
+
 
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            bool encontrado = false;
             string wordFromGuessTextBox=guessTextBox.Text;
             guessTextBox.Text = "";
 
             if (wordFromGuessTextBox == "")
                 return;
-            for (int i=0; i< wordForHangman.Length; i++)
+            for (int i = 0; i < wordForHangman.Length; i++)
+            {
                 if (wordForHangman[i] == wordFromGuessTextBox[0])
                 {
+                    encontrado = true;
                     wordTextBlock.Text = "esta";
+                    //Update guessWord with the letter guessed
+                    // showWordTextBlock.Text.Insert(i, wordForHangman[i]);
+
                     //quitar caracter de wordForHangman que sea igual a c
+                    //cuando hay dos juntas pp al quitar un elemento y reducir
+                    //el tamaño, esta sera saltada..
                     deleteCharacterFromString(i);
-                    return;
-                }
-                else
-                { 
-                    wordTextBlock.Text = "no esta";
-                    if(i+1==wordForHangman.Length)
-                        hangmanCanvas.Children.Add(new hangmanLine().drawHangmanLine());
-                }
 
-
+                }
+            }
+            if (encontrado==false)
+                {
+                     wordTextBlock.Text = "no esta";
+                     hangmanCanvas.Children.Add(new hangmanLine().drawHangmanLine());
+                }
         }
 
        /// <summary>

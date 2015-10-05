@@ -9,7 +9,7 @@ namespace hangman
 {
     class hangmanLine
     {
-        public Line myLine;
+        public Line myLine { get; set; }
         static int counterLinesDrawn=0;
 
 
@@ -39,6 +39,12 @@ namespace hangman
                     myLine.Y2 = 90;                   
                     break;
                 case 3:
+                    myLine.X1 = 30;
+                    myLine.X2 = 40;
+                    myLine.Y1 = 10;
+                    myLine.Y2 = 40;
+                    break;
+                case 4:
                     myLine.X1 = 30;
                     myLine.X2 = 40;
                     myLine.Y1 = 10;
