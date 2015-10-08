@@ -23,63 +23,60 @@ namespace hangman
         string wordForHangman;
         string[] lines;
         const string path = @"../../Words/hangman.txt";
+        char[] tempWord;
+        int wordForHangmanLenght;
+
+
         public MainWindow()
         {
             InitializeComponent();
             Random rand = new Random();
             lines = System.IO.File.ReadAllLines(path);
             wordForHangman=lines[rand.Next(lines.Length)];
-            //showWordTextBlock.Text = wordForHangman;
-            for (int i = 0; i <= wordForHangman.Length; i++)
-                showWordTextBlock.Text+= " _";
+            tempWord = new char[wordForHangman.Length*2];
+            //  tempWord = wordForHangman.ToCharArray();
+            //showWordTextBlock.Text = wordForHangman;          
+            wordForHangmanLenght = wordForHangman.Length;
+            for (int i=0; i<wordForHangman.Length*2; i++)
+            {
+                if (i % 2 == 0)
+                    tempWord[i] = ' ';
+                else
+                    tempWord[i] = '_';
 
 
+            }
+            showWordTextBlock.Text = new string(tempWord);
         }
-
+        //transformar tempWord en p_e_p_p_e_r
         private void button_Click(object sender, RoutedEventArgs e)
         {
             bool encontrado = false;
-            string wordFromGuessTextBox=guessTextBox.Text;
-            guessTextBox.Text = "";
+            string wordFromGuessTextBox = guessTextBox.Text;
 
-            if (wordFromGuessTextBox == "")
-                return;
             for (int i = 0; i < wordForHangman.Length; i++)
             {
-                if (wordForHangman[i] == wordFromGuessTextBox[0])
+
+                if (Convert.ToChar(wordFromGuessTextBox) == wordForHangman.ToCharArray()[i])
                 {
                     encontrado = true;
-                    wordTextBlock.Text = "esta";
-                    //Update guessWord with the letter guessed
-                    // showWordTextBlock.Text.Insert(i, wordForHangman[i]);
-
-                    //quitar caracter de wordForHangman que sea igual a c
-                    //cuando hay dos juntas pp al quitar un elemento y reducir
-                    //el tamaño, esta sera saltada..
-                    deleteCharacterFromString(i);
-
+                    tempWord[i + i + 1] = Convert.ToChar(guessTextBox.Text);
+                    wordForHangmanLenght--;
                 }
+
+
             }
-            if (encontrado==false)
-                {
-                     wordTextBlock.Text = "no esta";
-                     hangmanCanvas.Children.Add(new hangmanLine().drawHangmanLine());
-                }
-        }
-
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <param name="indexCharacter"> index of the character to be deleted.</param>
-        public void deleteCharacterFromString(int indexCharacter)
-        {
-            wordForHangman=wordForHangman.Remove(indexCharacter,1);
-            if (wordForHangman.Length == 0)
+            if (encontrado == false)
             {
-                 MessageBox.Show("You have won!!","Result", MessageBoxButton.OK,MessageBoxImage.Question);
+                wordTextBlock.Text = "no esta";
+                hangmanCanvas.Children.Add(new hangmanLine().drawHangmanLine());
             }
-            else
-                showWordTextBlock.Text = wordForHangman;
+
+            showWordTextBlock.Text = new string(tempWord);
+            if (wordForHangmanLenght == 0)
+            {
+                MessageBox.Show("You have won!!", "Result", MessageBoxButton.OK, MessageBoxImage.Question);
+            }
         }
-    }
-}
+    } //class
+} //namespace
