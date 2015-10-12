@@ -25,6 +25,7 @@ namespace hangman
         const string path = @"../../Words/hangman.txt";
         char[] tempWord;
         int wordForHangmanLenght;
+        List<char> usedChars= new List <char> ();
 
 
         public MainWindow()
@@ -51,32 +52,42 @@ namespace hangman
         //transformar tempWord en p_e_p_p_e_r
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            if (guessTextBox.Text == "")
+                return;
             bool encontrado = false;
-            string wordFromGuessTextBox = guessTextBox.Text;
+            string wordFromGuessTextBox = guessTextBox.Text.ToLower();
+           
 
-            for (int i = 0; i < wordForHangman.Length; i++)
-            {
-
-                if (Convert.ToChar(wordFromGuessTextBox) == wordForHangman.ToCharArray()[i])
+            if (!usedChars.Contains(Convert.ToChar(wordFromGuessTextBox))) { 
+            
+                for (int i = 0; i < wordForHangman.Length; i++)
                 {
-                    encontrado = true;
-                    tempWord[i + i + 1] = Convert.ToChar(guessTextBox.Text);
-                    wordForHangmanLenght--;
+
+                    if (Convert.ToChar(wordFromGuessTextBox) == wordForHangman.ToCharArray()[i])
+                    {
+                        encontrado = true;
+                        tempWord[i + i + 1] = Convert.ToChar(guessTextBox.Text.ToLower());
+                        wordForHangmanLenght--;
+                    }
+
+
+                }
+                if (encontrado == false)
+                {
+                    wordTextBlock.Text = "no esta";
+                    hangmanCanvas.Children.Add(new hangmanLine().drawHangmanLine());
                 }
 
-
+                showWordTextBlock.Text = new string(tempWord);
+                if (wordForHangmanLenght == 0)
+                {
+                    MessageBox.Show("You have won!!", "Result", MessageBoxButton.OK, MessageBoxImage.Question);
+                }
             }
-            if (encontrado == false)
-            {
-                wordTextBlock.Text = "no esta";
-                hangmanCanvas.Children.Add(new hangmanLine().drawHangmanLine());
-            }
-
-            showWordTextBlock.Text = new string(tempWord);
-            if (wordForHangmanLenght == 0)
-            {
-                MessageBox.Show("You have won!!", "Result", MessageBoxButton.OK, MessageBoxImage.Question);
-            }
+            usedChars.Add(Convert.ToChar(wordFromGuessTextBox));
+            guessTextBox.Text = "";
+            if (hangmanLine.CounterLinesDrawn == 7)
+                MessageBox.Show("You have lost!");
         }
     } //class
 } //namespace
