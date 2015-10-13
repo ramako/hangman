@@ -20,7 +20,7 @@ namespace hangman
             {
                 return counterLinesDrawn;
             }
-            set
+            private set
             {
                 counterLinesDrawn = value;
             }

@@ -82,12 +82,15 @@ namespace hangman
                 if (wordForHangmanLenght == 0)
                 {
                     MessageBox.Show("You have won!!", "Result", MessageBoxButton.OK, MessageBoxImage.Question);
+                    checkButton.Click -= button_Click;
                 }
             }
             usedChars.Add(Convert.ToChar(wordFromGuessTextBox));
             guessTextBox.Text = "";
-            if (hangmanLine.CounterLinesDrawn == 7)
+            if (hangmanLine.CounterLinesDrawn == 7) { 
                 MessageBox.Show("You have lost!");
+                checkButton.Click -= button_Click;
+            }
         }
     } //class
 } //namespace
